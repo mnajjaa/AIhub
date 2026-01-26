@@ -1,0 +1,7 @@
+Please research and answer the following question thoroughly.
+Return your response as a valid JSON object with the following structure:
+{
+  "result": "Your detailed answer here"
+}
+
+Important: Your response MUST be valid JSON. Do not include any text outside the JSON object.

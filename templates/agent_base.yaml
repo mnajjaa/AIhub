@@ -1,0 +1,15 @@
+agent_type: "{{ agent_type }}"
+
+model:
+  provider: "{{ model_provider }}"
+  model_name: "{{ model_name }}"
+  temperature: {{ temperature }}
+
+prompts:
+  system: "{{ prompt_system }}"
+  task: "{{ prompt_task }}"
+
+input_schema: "{{ input_schema }}"
+output_schema: "{{ output_schema }}"
+
+tools: {{ tools_list }}

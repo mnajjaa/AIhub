@@ -1,0 +1,12 @@
+Please summarize the following text in a clear and concise manner. The summary should capture the main ideas and key points.
+
+Also extract 3 to 5 important keywords from the text.
+
+Return your answer as a JSON object with this format:
+
+{
+  "summary": "<summarized text here>",
+  "keywords": ["<keyword1>", "<keyword2>", "<keyword3>"]
+}
+
+Only return valid JSON. Do not include any extra text, explanation, or formatting.
