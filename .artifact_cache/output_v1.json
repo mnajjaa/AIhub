@@ -1,0 +1,6 @@
+{
+  "result": {
+    "type": "string",
+    "description": "The result of the researcher operation"
+  }
+}

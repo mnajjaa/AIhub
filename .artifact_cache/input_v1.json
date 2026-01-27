@@ -1,0 +1,6 @@
+{
+  "question": {
+    "type": "string",
+    "description": "The research question to answer"
+  }
+}

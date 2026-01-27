@@ -1,17 +1,20 @@
-agent_type: "summarizer"
-
+agent_type: summarizer
 model:
-  provider: "openai"
-  model_name: "gpt-3.5-turbo"
+  provider: openai
+  model_name: gpt-3.5-turbo
   temperature: 0
-
 prompts:
-  system: "prompts/summarizer_system.txt"
-  task: "prompts/summarizer_task.txt"
-
-input_schema: "schemas/summarizer_input.json"
-output_schema:
-  summary: string
-  keywords: list[string]
-
-tools: ['summarization_helpers']
+  system: mlflow://prompts/summarizer/system_v1
+  task: mlflow://prompts/summarizer/task_v1
+input_schema: mlflow://schemas/summarizer/input_v1
+output_schema: mlflow://schemas/summarizer/output_v1
+tools:
+- summarization_helpers
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  fallback_paths:
+    mlflow://prompts/summarizer/system_v1: prompts/summarizer_system.txt
+    mlflow://prompts/summarizer/task_v1: prompts/summarizer_task.txt
+    mlflow://schemas/summarizer/input_v1: schemas/summarizer_input.json
+    mlflow://schemas/summarizer/output_v1: schemas/summarizer_output.json
+  run_id: b365584b3b6f4124ad20494100f24d9c

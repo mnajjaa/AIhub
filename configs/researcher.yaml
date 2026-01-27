@@ -1,15 +1,19 @@
-agent_type: "researcher"
-
+agent_type: researcher
 model:
-  provider: "openai"
-  model_name: "gpt-3.5-turbo"
+  provider: openai
+  model_name: gpt-3.5-turbo
   temperature: 0
-
 prompts:
-  system: "prompts/researcher_system.txt"
-  task: "prompts/researcher_task.txt"
-
-input_schema: "schemas/researcher_input.json"
-output_schema: "schemas/researcher_output.json"
-
+  system: mlflow://prompts/researcher/system_v1
+  task: mlflow://prompts/researcher/task_v1
+input_schema: mlflow://schemas/researcher/input_v1
+output_schema: mlflow://schemas/researcher/output_v1
 tools: []
+mlflow:
+  tracking_uri: sqlite:///mlflow_test.db
+  fallback_paths:
+    mlflow://prompts/researcher/system_v1: prompts/researcher_system.txt
+    mlflow://prompts/researcher/task_v1: prompts/researcher_task.txt
+    mlflow://schemas/researcher/input_v1: schemas/researcher_input.json
+    mlflow://schemas/researcher/output_v1: schemas/researcher_output.json
+  run_id: 60778996cb244972b4f3a4080767f64c

@@ -2,6 +2,16 @@ import yaml
 from jinja2 import Template
 import argparse
 import os
+import sys
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
+
 
 def generate_config(template_path, output_path, context):
     with open(template_path, "r") as f:
@@ -9,7 +19,7 @@ def generate_config(template_path, output_path, context):
     rendered_yaml = template.render(**context)
     with open(output_path, "w") as f:
         f.write(rendered_yaml)
-    print(f"✅ Generated: {output_path}")
+    logger.info("Generated: %s", output_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
