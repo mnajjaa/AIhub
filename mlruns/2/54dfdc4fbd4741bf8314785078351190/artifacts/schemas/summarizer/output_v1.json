@@ -1,0 +1,13 @@
+{
+  "summary": {
+    "type": "string",
+    "description": "The summarized text"
+  },
+  "keywords": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "description": "List of important keywords extracted from the text"
+  }
+}

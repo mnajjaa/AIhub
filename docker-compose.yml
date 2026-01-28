@@ -1,0 +1,70 @@
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: containers/mlflow/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlflow.db:/mlflow/mlflow.db
+      - ./mlflow_artifacts:/mlflow/artifacts
+      - ./mlruns:/app/mlruns
+    networks:
+      - agents
+
+  researcher:
+    build:
+      context: .
+      dockerfile: containers/researcher/Dockerfile
+    env_file:
+      - .env
+    environment:
+      MLFLOW_TRACKING_URI: sqlite:////app/mlflow.db
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlruns:/app/mlruns
+      - ./.artifact_cache:/app/.artifact_cache
+    depends_on:
+      - mlflow
+    networks:
+      - agents
+
+  summarizer:
+    build:
+      context: .
+      dockerfile: containers/summarizer/Dockerfile
+    env_file:
+      - .env
+    environment:
+      MLFLOW_TRACKING_URI: sqlite:////app/mlflow.db
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlruns:/app/mlruns
+      - ./.artifact_cache:/app/.artifact_cache
+    depends_on:
+      - mlflow
+      - researcher
+    networks:
+      - agents
+
+  orchestrator:
+    image: agent-orchestrator
+    build:
+      context: .
+      dockerfile: containers/orchestrator/Dockerfile
+    ports:
+      - "8003:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - summarizer
+      - researcher
+    networks:
+      - agents
+
+networks:
+  agents:
